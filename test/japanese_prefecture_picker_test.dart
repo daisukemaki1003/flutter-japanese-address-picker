@@ -1,4 +1,4 @@
-import 'package:japanese_prefecture_picker/src/utils/util.dart';
+import 'package:japanese_prefecture_picker/src/utils/assets_loader.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -8,7 +8,7 @@ void main() {
     });
 
     test('CSVファイルを読み込めるか？', () async {
-      final csv = await CsvLoader.prefectures();
+      final csv = await AssetsLoader.prefectures();
       print(csv);
       expect(csv.length, 47);
     });

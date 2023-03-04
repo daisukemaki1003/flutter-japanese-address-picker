@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-class CsvLoader {
+class AssetsLoader {
+  /// 都道府県+市町村データを読み込む
   static Future<List<List>> city() {
     return loadCsvFile("city_seeds.csv");
   }
 
+  /// 都道府県データを読み込む
   static Future<List<List>> prefectures() {
     return loadCsvFile("prefectures_seeds.csv");
   }
@@ -20,7 +22,7 @@ class CsvLoader {
 
     final decoded = loadAssetsFile("csv/$path").transform(utf8.decoder);
 
-    /// ','で分割したListを
+    /// ','で分割したListを[data]に追加
     await decoded.transform(LineSplitter()).listen((line) {
       data.add(line.split(','));
     }).asFuture();
