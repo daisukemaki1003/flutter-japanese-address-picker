@@ -21,18 +21,26 @@ import 'package:japanese_prefecture_picker/src/utils/assets_loader.dart';
 Future<Map<int, List<int>>> convertCitiesToMapIds() async {
   final Map<int, List<int>> data = {};
 
-  final prefectures = await AssetsLoader.prefectures().then((v) => v.asMap());
-  final cities = await AssetsLoader.cities().then((v) => v.asMap());
+  final prefectures = await AssetsLoader.prefectures();
+  final cities = await AssetsLoader.cities();
 
-  int addId(int prefectureKey, int cityKey) {
-    if (cities[cityKey]?[0] != prefectures[prefectureKey]?[0]) return cityKey;
-    data[prefectureKey] = [...?data[prefectureKey], cityKey];
-    return addId(prefectureKey, cityKey + 1);
+  /// [prefId] 都道府県ID
+  /// [cityId] 市町村ID
+  /// 都道府県名が一致した市町村を同一の都道府県IDで保存する。
+  /// 返り値の市町村IDは次回市町村データを検索する際に利用する。
+  int addCityId(int prefId, int cityId) {
+    /// 都道府県名が一致しなかったら市町村IDを返す。
+    if (cities.length <= cityId) return cityId;
+    if (cities[cityId][0] != prefectures[prefId][0]) return cityId;
+
+    /// 都道府県名が一致したら再帰し、次の[cityId]で都道府県名が一致するデータを検索する。
+    data[prefId] = [...?data[prefId], cityId];
+    return addCityId(prefId, cityId + 1);
   }
 
-  int index = 0;
-  for (var prefecture in prefectures.keys) {
-    index = addId(prefecture, index);
+  int cityId = 0;
+  for (var pref in prefectures) {
+    cityId = addCityId(prefectures.indexOf(pref), cityId);
   }
 
   return data;
