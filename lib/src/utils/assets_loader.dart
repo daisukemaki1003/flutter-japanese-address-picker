@@ -3,8 +3,8 @@ import 'dart:io';
 
 class AssetsLoader {
   /// 都道府県+市町村データを読み込む
-  static Future<List<List>> city() {
-    return loadCsvFile("city_seeds.csv");
+  static Future<List<List>> cities() {
+    return loadCsvFile("cities_seeds.csv");
   }
 
   /// 都道府県データを読み込む
