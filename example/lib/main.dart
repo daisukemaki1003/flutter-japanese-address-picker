@@ -39,14 +39,28 @@ class ExampleApp extends StatelessWidget {
           SizedBox(
             width: buttonWidth,
             child: ElevatedButton(
-              onPressed: () {
-                const JapanesePrefecturePicker().show(context);
-              },
+              onPressed: () => _showButtomPicker(context),
               child: const Text('Open picker'),
             ),
           ),
         ],
       ),
     );
+  }
+
+  _showButtomPicker(BuildContext context) {
+    JapanesePrefecturePicker(
+      header: JapanesePrefecturePickerHeader(
+        title: const Text('タイトル', style: TextStyle(fontSize: 16)),
+        leading: TextButton(
+          onPressed: () {},
+          child: const Text('キャンセル', style: TextStyle(fontSize: 14)),
+        ),
+        trailing: TextButton(
+          onPressed: () {},
+          child: const Text('保存', style: TextStyle(fontSize: 14)),
+        ),
+      ),
+    ).show(context);
   }
 }

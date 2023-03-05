@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class BottomSheetHeader extends StatelessWidget {
-  BottomSheetHeader({
+class JapanesePrefecturePickerHeader extends StatelessWidget {
+  JapanesePrefecturePickerHeader({
     Key? key,
     this.height = 40.0,
     Color? backgroundColor,
     EdgeInsets? padding,
+    this.title,
     this.leading,
     this.trailing,
   }) : super(key: key) {
@@ -27,6 +28,8 @@ class BottomSheetHeader extends StatelessWidget {
   /// ヘッダー内の各WidgetのPaddingについては、Containerに格納し各自Paddingを設定してください。
   late final EdgeInsets padding;
 
+  final Widget? title;
+
   /// ヘッダーの左端に表示するWidget
   final Widget? leading;
 
@@ -42,11 +45,15 @@ class BottomSheetHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Expanded(child: leading ?? Container()),
-          Text('タイトル', style: TextStyle(fontSize: 16)),
-          Expanded(child: trailing ?? Container())
+          item(Alignment.centerLeft, leading),
+          item(Alignment.center, title),
+          item(Alignment.centerRight, trailing),
         ],
       ),
     );
+  }
+
+  item(AlignmentGeometry? alignment, Widget? widget) {
+    return Expanded(child: Container(alignment: alignment, child: widget));
   }
 }
