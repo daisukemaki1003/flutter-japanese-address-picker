@@ -50,13 +50,9 @@ class ExampleApp extends StatelessWidget {
   }
 
   _showButtomPicker(BuildContext context) {
-    // DatePicker.showPicker(
-    //   context,
-    //   showTitleActions: true,
-    //   locale: LocaleType.jp,
-    //   onConfirm: (date) {},
-    // );
-    JapanesePrefecturePicker(
+    JapanesePrefecturePicker.showBottomSheet(
+      context,
+      showHeader: true,
       header: JapanesePrefecturePickerHeader(
         title: const Text('タイトル', style: TextStyle(fontSize: 16)),
         leading: TextButton(
@@ -68,6 +64,6 @@ class ExampleApp extends StatelessWidget {
           child: const Text('保存', style: TextStyle(fontSize: 14)),
         ),
       ),
-    ).show(context);
+    );
   }
 }

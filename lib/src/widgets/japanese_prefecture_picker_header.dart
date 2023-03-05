@@ -45,15 +45,15 @@ class JapanesePrefecturePickerHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          item(Alignment.centerLeft, leading),
-          item(Alignment.center, title),
-          item(Alignment.centerRight, trailing),
+          headerItem(Alignment.centerLeft, leading),
+          headerItem(Alignment.center, title),
+          headerItem(Alignment.centerRight, trailing),
         ],
       ),
     );
   }
 
-  item(AlignmentGeometry? alignment, Widget? widget) {
+  headerItem(AlignmentGeometry? alignment, Widget? widget) {
     return Expanded(child: Container(alignment: alignment, child: widget));
   }
 }
