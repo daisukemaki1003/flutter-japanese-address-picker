@@ -8,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,8 +25,28 @@ class MyApp extends StatelessWidget {
 class ExampleApp extends StatelessWidget {
   const ExampleApp({super.key});
 
+  final buttonWidth = 300.0;
+
   @override
   Widget build(BuildContext context) {
-    return const JapanesePrefecturePicker();
+    return Container(
+      color: const Color(0xffF6F2F2),
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: buttonWidth,
+            child: ElevatedButton(
+              onPressed: () {
+                const JapanesePrefecturePicker().show(context);
+              },
+              child: const Text('Open picker'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
