@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:japanese_prefecture_picker/src/data/fake_address.dart';
+import 'package:japanese_prefecture_picker/src/widgets/japanese_prefecture_picker_view_item.dart';
 
 class JapanesePrefecturePickerView extends StatefulWidget {
   const JapanesePrefecturePickerView({Key? key}) : super(key: key);
@@ -10,32 +12,41 @@ class JapanesePrefecturePickerView extends StatefulWidget {
 
 class _JapanesePrefecturePickerViewState
     extends State<JapanesePrefecturePickerView> {
+  int prefectureId = 0;
+  int cityId = 0;
+  Map<int, String> prefectures = {};
+  Map<int, String> cites = {};
+
+  @override
+  void initState() {
+    json.forEach((key, value) {
+      prefectures[key] = value['prefecture'] as String;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    cites = json[prefectureId]!['cites'] as Map<int, String>;
+
     return Expanded(
       child: CustomSingleChildLayout(
         delegate: _JapanesePrefecturePickerViewLayout(),
-        child: Row(children: [_item(), _item()]),
+        child: Row(children: [
+          _pickerItem(prefectures, (id) => setState(() => prefectureId = id)),
+          _pickerItem(cites, (id) => setState(() => cityId = id)),
+        ]),
       ),
     );
   }
 
-  Widget _item() {
-    return Expanded(
-      child: NotificationListener(
-        child: CupertinoPicker.builder(
-          backgroundColor: Colors.white,
-          itemExtent: 35.0,
-          onSelectedItemChanged: (int index) {},
-          useMagnifier: true,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              alignment: Alignment.center,
-              child: Text('データ', textAlign: TextAlign.start),
-            );
-          },
-        ),
-      ),
+  JapanesePrefecturePickerViewItem _pickerItem(
+    Map<int, String> addresses,
+    Function(int addressId) onChange,
+  ) {
+    return JapanesePrefecturePickerViewItem(
+      addresses,
+      onChange: (index) => onChange(addresses.keys.elementAt(index)),
     );
   }
 }

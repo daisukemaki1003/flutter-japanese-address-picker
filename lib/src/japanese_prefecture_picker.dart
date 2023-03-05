@@ -39,13 +39,6 @@ class JapanesePrefecturePicker extends StatefulWidget {
 }
 
 class _JapanesePrefecturePickerState extends State<JapanesePrefecturePicker> {
-  final List<Address> addresses = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
