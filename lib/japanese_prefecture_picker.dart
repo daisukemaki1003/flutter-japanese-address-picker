@@ -1,8 +1,19 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
-library japanese_prefecture_picker;
+import 'package:flutter/material.dart';
 
-export 'src/japanese_prefecture_picker_base.dart';
+class JapanesePrefecturePicker extends StatefulWidget {
+  const JapanesePrefecturePicker({Key? key}) : super(key: key);
 
-// TODO: Export any libraries intended for clients of this package.
+  @override
+  State createState() => _JapanesePrefecturePickerState();
+}
+
+class _JapanesePrefecturePickerState extends State<JapanesePrefecturePicker> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        child: Text('text'),
+      ),
+    );
+  }
+}

@@ -2,22 +2,6 @@ import 'package:japanese_prefecture_picker/src/utils/assets_loader.dart';
 
 /// 市町村データをMapデータに変換する
 /// [key]は都市コード
-///
-/// final map = {
-///   '都市コード': [
-///     '市町村コード',
-///     '市町村コード',
-///     '市町村コード',
-///     '市町村コード',
-///   ],
-///   '都市コード2': [
-///     '市町村コード',
-///     '市町村コード',
-///     '市町村コード',
-///     '市町村コード',
-///   ]
-/// };
-///
 Future<Map<int, List<int>>> convertCitiesToMapIds() async {
   final Map<int, List<int>> data = {};
 
@@ -29,8 +13,9 @@ Future<Map<int, List<int>>> convertCitiesToMapIds() async {
   /// 都道府県名が一致した市町村を同一の都道府県IDで保存する。
   /// 返り値の市町村IDは次回市町村データを検索する際に利用する。
   int addCityId(int prefId, int cityId) {
-    /// 都道府県名が一致しなかったら市町村IDを返す。
     if (cities.length <= cityId) return cityId;
+
+    /// 都道府県名が一致しなかったら市町村IDを返す。
     if (cities[cityId][0] != prefectures[prefId][0]) return cityId;
 
     /// 都道府県名が一致したら再帰し、次の[cityId]で都道府県名が一致するデータを検索する。
