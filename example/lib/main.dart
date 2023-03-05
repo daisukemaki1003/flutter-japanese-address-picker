@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:japanese_prefecture_picker/japanese_prefecture_picker.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +50,12 @@ class ExampleApp extends StatelessWidget {
   }
 
   _showButtomPicker(BuildContext context) {
+    // DatePicker.showPicker(
+    //   context,
+    //   showTitleActions: true,
+    //   locale: LocaleType.jp,
+    //   onConfirm: (date) {},
+    // );
     JapanesePrefecturePicker(
       header: JapanesePrefecturePickerHeader(
         title: const Text('タイトル', style: TextStyle(fontSize: 16)),

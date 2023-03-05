@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/utils/assets_loader.dart';
+import 'package:japanese_prefecture_picker/src/data/address.dart';
+import 'package:japanese_prefecture_picker/src/widgets/japanese_prefecture_picker_view.dart';
 
 class JapanesePrefecturePicker extends StatefulWidget {
   const JapanesePrefecturePicker({
@@ -21,29 +21,25 @@ class JapanesePrefecturePicker extends StatefulWidget {
   /// 選択された都道府県市データを返します
   final Function(dynamic)? onChange;
 
-  void show(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      enableDrag: false,
-      isScrollControlled: false,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return BottomSheet(
+  void show(BuildContext context) => showModalBottomSheet(
+        context: context,
+        enableDrag: false,
+        isScrollControlled: false,
+        backgroundColor: Colors.transparent,
+        builder: (context) => BottomSheet(
           backgroundColor: Colors.transparent,
           enableDrag: false,
           onClosing: () {},
           builder: (context) => this,
-        );
-      },
-    );
-  }
+        ),
+      );
 
   @override
   State createState() => _JapanesePrefecturePickerState();
 }
 
 class _JapanesePrefecturePickerState extends State<JapanesePrefecturePicker> {
-  final List<String> items = [];
+  final List<Address> addresses = [];
 
   @override
   void initState() {
@@ -58,17 +54,7 @@ class _JapanesePrefecturePickerState extends State<JapanesePrefecturePicker> {
       child: Column(
         children: [
           widget.header ?? Container(),
-          Expanded(
-            child: CupertinoTheme(
-              data: CupertinoThemeData(textTheme: CupertinoTextThemeData()),
-              child: CupertinoPicker(
-                itemExtent: widget.itemExtent,
-                scrollController: FixedExtentScrollController(),
-                onSelectedItemChanged: (i) => widget.onChange?.call(items[i]),
-                children: items.map((e) => Text(e)).toList(),
-              ),
-            ),
-          ),
+          JapanesePrefecturePickerView(),
         ],
       ),
     );
