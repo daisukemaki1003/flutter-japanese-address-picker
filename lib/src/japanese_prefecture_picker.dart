@@ -47,7 +47,6 @@ class _JapanesePrefecturePickerState extends State<JapanesePrefecturePicker> {
 
   @override
   void initState() {
-    AssetsLoader.prefectures();
     super.initState();
   }
 
