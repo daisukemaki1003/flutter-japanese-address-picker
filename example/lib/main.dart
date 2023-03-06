@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:japanese_prefecture_picker/japanese_prefecture_picker.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,21 +48,13 @@ class ExampleApp extends StatelessWidget {
     );
   }
 
-  _showButtomPicker(BuildContext context) {
-    JapanesePrefecturePicker.showBottomSheet(
-      context,
-      showHeader: true,
-      header: JapanesePrefecturePickerHeader(
-        title: const Text('タイトル', style: TextStyle(fontSize: 16)),
-        leading: TextButton(
-          onPressed: () {},
-          child: const Text('キャンセル', style: TextStyle(fontSize: 14)),
-        ),
-        trailing: TextButton(
-          onPressed: () {},
-          child: const Text('保存', style: TextStyle(fontSize: 14)),
-        ),
-      ),
-    );
+  _showButtomPicker(BuildContext context) async {
+    final address = await JapanesePrefecturePicker.showBottomSheet(context);
+    if (address != null) {
+      print(address.prefecture);
+      print(address.city);
+    } else {
+      print("no response");
+    }
   }
 }

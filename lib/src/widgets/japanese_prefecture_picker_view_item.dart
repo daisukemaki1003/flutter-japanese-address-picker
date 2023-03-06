@@ -41,6 +41,7 @@ class JapanesePrefecturePickerViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: NotificationListener(
+        /// TODO スクロールが終了した時に市町村データを更新する
         child: CupertinoPicker(
           itemExtent: 35.0,
           useMagnifier: true,

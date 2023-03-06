@@ -1,53 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:japanese_prefecture_picker/src/japanese_prefecture_picker_theme.dart';
 
 class JapanesePrefecturePickerHeader extends StatelessWidget {
   JapanesePrefecturePickerHeader({
     Key? key,
-    this.height = 40.0,
-    Color? backgroundColor,
-    EdgeInsets? padding,
-    this.title,
-    this.leading,
-    this.trailing,
-  }) : super(key: key) {
-    this.padding = padding ?? EdgeInsets.symmetric(horizontal: 10);
-    this.backgroundColor = backgroundColor ?? Color(0xFFEEEEEE);
-  }
+    required this.theme,
+    required this.onCansel,
+    required this.onSave,
+  }) : super(key: key);
 
-  /// ヘッダーの高さ
-  /// デフォルトの高さは[40.0]
-  final double height;
+  final JapanesePrefecturePickerTheme theme;
 
-  /// ヘッダーの背景色
-  /// デフォルトの背景色は[Color(0xFFEEEEEE)]
-  /// by default it's [Color(0xFFEEEEEE)]
-  late final Color backgroundColor;
+  /// 当道府県データの選択をキャンセルした時の処理
+  final VoidCallback? onCansel;
 
-  /// ヘッダーのPadding
-  /// デフォルトのPaddingは[EdgeInsets.symmetric(horizontal: 10)]
-  /// ヘッダー内の各WidgetのPaddingについては、Containerに格納し各自Paddingを設定してください。
-  late final EdgeInsets padding;
-
-  final Widget? title;
-
-  /// ヘッダーの左端に表示するWidget
-  final Widget? leading;
-
-  /// ヘッダーの右端に表示するWidget
-  final Widget? trailing;
+  /// 当道府県データを保存時の処理
+  final VoidCallback? onSave;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
-      color: backgroundColor,
-      padding: padding,
+      height: theme.headerHeight,
+      color: theme.headerColor,
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          headerItem(Alignment.centerLeft, leading),
-          headerItem(Alignment.center, title),
-          headerItem(Alignment.centerRight, trailing),
+          headerItem(
+            Alignment.centerLeft,
+            TextButton(
+              onPressed: onCansel,
+              child: Text(theme.headerCansel, style: theme.headerCanselStyle),
+            ),
+          ),
+          headerItem(
+            Alignment.center,
+            Text(theme.headerTitle, style: theme.headerTitleStyle),
+          ),
+          headerItem(
+            Alignment.centerRight,
+            TextButton(
+              onPressed: onSave,
+              child: Text(theme.headerSave, style: theme.headerSaveStyle),
+            ),
+          ),
         ],
       ),
     );
