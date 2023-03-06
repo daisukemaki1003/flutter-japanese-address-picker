@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:japanese_prefecture_picker/src/data/address.dart';
-import 'package:japanese_prefecture_picker/src/data/address_item.dart';
 
 class JapanesePrefecturePickerController extends StatefulWidget {
   const JapanesePrefecturePickerController({
@@ -18,10 +17,10 @@ class JapanesePrefecturePickerController extends StatefulWidget {
   /// [onChange]アドレスを更新する関数
   /// 引数には新たに選択したアドレスデータが入力される
   final Widget Function(
-    Address address,
+    Address? address,
     List<AddressItem> prefectures,
     List<AddressItem> cites,
-    void Function(Address) onChange,
+    void Function(Address?) onChange,
   ) builder;
 
   @override
@@ -35,7 +34,7 @@ class _JapanesePrefecturePickerControllerState
   List addresses = [];
 
   /// 選択されたアドレス
-  Address selected = Address();
+  Address? selected;
 
   /// 表示する都道府県データ
   List<AddressItem> prefectures = [];
@@ -43,10 +42,12 @@ class _JapanesePrefecturePickerControllerState
   /// 表示する市町村データ
   List<AddressItem> cites = [];
 
-  changeAddress(Address newAddress) {
+  changeAddress(Address? newAddress) {
+    if (newAddress == null) return;
+
     /// 選択された都道府県IDに応じて表示する市町村データを生成します。
-    if (selected.prefectureId != newAddress.prefectureId) {
-      cites = addUnselectedItems(cityAddressItems(newAddress.prefectureId));
+    if (selected?.prefecture.id != newAddress.prefecture.id) {
+      cites = addUnselectedItems(cityAddressItems(newAddress.prefecture.id));
     }
 
     /// アドレスデータを更新
@@ -79,11 +80,12 @@ class _JapanesePrefecturePickerControllerState
   @override
   void initState() {
     /// アドレスデータ読み込み
-    Future(() async {
+    () async {
       addresses = await loadAddresses();
       prefectures = prefectureAddressItems();
-      cites = addUnselectedItems(cityAddressItems(selected.prefectureId));
-    });
+      cites = addUnselectedItems(cityAddressItems(0));
+      selected = Address(prefecture: prefectures[0], city: cites[0]);
+    }();
     super.initState();
   }
 

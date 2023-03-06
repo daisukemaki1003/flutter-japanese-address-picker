@@ -1,19 +1,26 @@
-class Address {
-  /// 都道府県ID
-  final int prefectureId;
+class AddressItem {
+  final int id;
+  final String name;
 
-  /// 市町村ID
-  final int cityId;
+  AddressItem(this.id, this.name);
+}
+
+class Address {
+  /// 都道府県
+  final AddressItem prefecture;
+
+  /// 市町村
+  final AddressItem city;
 
   Address({
-    this.prefectureId = 0,
-    this.cityId = -1,
+    required this.prefecture,
+    required this.city,
   });
 
-  Address copyWith({int? cityId, int? prefectureId}) {
+  Address copyWith({AddressItem? city, AddressItem? prefecture}) {
     return Address(
-      cityId: cityId ?? this.cityId,
-      prefectureId: prefectureId ?? this.prefectureId,
+      city: city ?? this.city,
+      prefecture: prefecture ?? this.prefecture,
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/data/address_item.dart';
+import 'package:japanese_prefecture_picker/src/data/address.dart';
 
 class JapanesePrefecturePickerViewItem extends StatelessWidget {
   const JapanesePrefecturePickerViewItem._({
