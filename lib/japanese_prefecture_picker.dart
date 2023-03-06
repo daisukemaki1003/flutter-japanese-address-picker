@@ -1,19 +1,4 @@
-import 'package:flutter/material.dart';
+library japanese_prefecture_picker;
 
-class JapanesePrefecturePicker extends StatefulWidget {
-  const JapanesePrefecturePicker({Key? key}) : super(key: key);
-
-  @override
-  State createState() => _JapanesePrefecturePickerState();
-}
-
-class _JapanesePrefecturePickerState extends State<JapanesePrefecturePicker> {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Text('text'),
-      ),
-    );
-  }
-}
+export 'src/japanese_prefecture_picker.dart';
+export 'src/widgets/japanese_prefecture_picker_header.dart';
