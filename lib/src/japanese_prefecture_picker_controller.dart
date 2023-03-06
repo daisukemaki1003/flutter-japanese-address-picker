@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:japanese_prefecture_picker/src/data/address.dart';
+import 'package:japanese_prefecture_picker/src/data/fake_address.dart';
 
 class JapanesePrefecturePickerController extends StatefulWidget {
   const JapanesePrefecturePickerController({
@@ -7,7 +8,12 @@ class JapanesePrefecturePickerController extends StatefulWidget {
     required this.builder,
   }) : super(key: key);
 
-  final Widget Function(Address, Function(Address) onChange) builder;
+  final Widget Function(
+    Address address,
+    Function(Address) onChange,
+    Map<int, String> prefectures,
+    Map<int, String> cites,
+  ) builder;
 
   @override
   State<StatefulWidget> createState() =>
@@ -16,7 +22,14 @@ class JapanesePrefecturePickerController extends StatefulWidget {
 
 class _JapanesePrefecturePickerControllerState
     extends State<JapanesePrefecturePickerController> {
-  late Address address;
+  /// 選択されたアドレス
+  Address address = Address();
+
+  /// 表示する都道府県データ
+  Map<int, String> prefectures = {};
+
+  /// 表示する市町村データ
+  Map<int, String> cites = {};
 
   changeAddress(newAddress) {
     setState(() => address = newAddress);
@@ -24,12 +37,23 @@ class _JapanesePrefecturePickerControllerState
 
   @override
   void initState() {
-    address = Address();
+    /// 都道府県データを初期化
+    json.forEach((key, value) {
+      prefectures[key] = value['prefecture'] as String;
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(address, changeAddress);
+    /// 選択された都道府県IDに応じて表示する市町村データを生成します。
+    cites = json[address.prefectureId]!['cites'] as Map<int, String>;
+
+    return widget.builder(
+      address,
+      changeAddress,
+      prefectures,
+      cites,
+    );
   }
 }
