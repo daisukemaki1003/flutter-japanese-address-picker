@@ -1,6 +1,4 @@
-import 'package:japanese_prefecture_picker/src/data/address.dart';
-
-final json = {
+final test_json_data = {
   0: {
     'prefecture': '北海道',
     'cites': {

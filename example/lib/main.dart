@@ -51,8 +51,8 @@ class ExampleApp extends StatelessWidget {
   _showButtomPicker(BuildContext context) async {
     final address = await JapanesePrefecturePicker.showBottomSheet(context);
     if (address != null) {
-      print(address.prefectureId);
-      print(address.cityId);
+      print(address.prefecture);
+      print(address.city);
     } else {
       print("no response");
     }

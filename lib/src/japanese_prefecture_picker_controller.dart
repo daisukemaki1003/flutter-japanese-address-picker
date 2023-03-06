@@ -31,11 +31,8 @@ class _JapanesePrefecturePickerControllerState
   /// 選択されたアドレス
   Address address = Address();
 
-  /// 表示する都道府県データ
+  // /// 表示する都道府県データ
   Map<int, String> prefectures = {};
-
-  /// 表示する市町村データ
-  Map<int, String> cites = {};
 
   changeAddress(newAddress) {
     setState(() => address = newAddress);
@@ -43,20 +40,24 @@ class _JapanesePrefecturePickerControllerState
 
   @override
   void initState() {
-    print("init");
-
-    /// 都道府県データを初期化
-    json.forEach((key, value) {
-      prefectures[key] = value['prefecture'] as String;
-    });
+    print('init');
+    prefectures = prefectureIdAndNames(address);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     /// 選択された都道府県IDに応じて表示する市町村データを生成します。
-    cites = json[address.prefectureId]!['cites'] as Map<int, String>;
+    /// TODO 都道府県データが更新された場合のみデータの更新するように修正
+    final cites = addUnselectedItems(getCites(address)!);
 
     return widget.builder(address, prefectures, cites, changeAddress);
+  }
+
+  /// 未選択項目を追加
+  Map<int, String> addUnselectedItems(Map<int, String> addresses) {
+    final data = {-1: '未選択'};
+    data.addAll(addresses);
+    return data;
   }
 }

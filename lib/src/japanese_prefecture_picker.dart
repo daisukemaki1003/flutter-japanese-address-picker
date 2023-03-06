@@ -137,10 +137,10 @@ class _JapanesePrefecturePickerComponentState
                   ),
                   JapanesePrefecturePickerView(
                     theme: theme,
-                    onChange: onChange,
                     address: address,
                     prefectures: prefectures,
                     cites: cites,
+                    onChange: onChange,
                   ),
                 ],
               );
