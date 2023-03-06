@@ -1,5 +1,3 @@
-import 'package:japanese_prefecture_picker/src/utils/address_util.dart';
-
 class Address {
   /// 都道府県ID
   final int prefectureId;
@@ -19,21 +17,21 @@ class Address {
     );
   }
 
-  /// 都道府県名
-  String get prefecture {
-    try {
-      return getPrefectures(this)?['prefecture'] as String;
-    } catch (e) {
-      return '未選択';
-    }
-  }
+  // /// 都道府県名
+  // String get prefecture {
+  //   try {
+  //     return getPrefectures(this)?['prefecture'] as String;
+  //   } catch (e) {
+  //     return '未選択';
+  //   }
+  // }
 
-  /// 市町村名
-  String get city {
-    try {
-      return getCites(this)?[cityId] as String;
-    } catch (e) {
-      return '未選択';
-    }
-  }
+  // /// 市町村名
+  // String get city {
+  //   try {
+  //     return getCites(this)?[cityId] as String;
+  //   } catch (e) {
+  //     return '未選択';
+  //   }
+  // }
 }

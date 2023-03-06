@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:japanese_prefecture_picker/src/data/address.dart';
+import 'package:japanese_prefecture_picker/src/data/address_item.dart';
 import 'package:japanese_prefecture_picker/src/japanese_prefecture_picker_theme.dart';
 import 'package:japanese_prefecture_picker/src/widgets/japanese_prefecture_picker_view_item.dart';
 
@@ -22,10 +23,10 @@ class JapanesePrefecturePickerView extends StatelessWidget {
   final Address address;
 
   /// 表示する都道府県データ
-  final Map<int, String> prefectures;
+  final List<AddressItem> prefectures;
 
   /// 表示する市町村データ
-  final Map<int, String> cites;
+  final List<AddressItem> cites;
 
   /// 選択中のアドレスデータが更新された際に呼び出す
   final Function(Address) onChange;
@@ -36,19 +37,15 @@ class JapanesePrefecturePickerView extends StatelessWidget {
       child: Row(children: [
         JapanesePrefecturePickerViewItem(
           addresses: prefectures,
-          onChange: (index) {
-            onChange(address.copyWith(
-              prefectureId: prefectures.keys.elementAt(index),
-            ));
-          },
+          onChange: (index) => onChange(
+            address.copyWith(prefectureId: prefectures[index].id),
+          ),
         ),
         JapanesePrefecturePickerViewItem(
           addresses: cites,
-          onChange: (index) {
-            onChange(address.copyWith(
-              cityId: cites.keys.elementAt(index),
-            ));
-          },
+          onChange: (index) => onChange(
+            address.copyWith(cityId: cites[index].id),
+          ),
         ),
       ]),
     );

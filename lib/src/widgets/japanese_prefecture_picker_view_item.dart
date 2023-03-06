@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:japanese_prefecture_picker/src/data/address_item.dart';
 
 class JapanesePrefecturePickerViewItem extends StatelessWidget {
   const JapanesePrefecturePickerViewItem._({
@@ -21,7 +22,7 @@ class JapanesePrefecturePickerViewItem extends StatelessWidget {
   final Function(int index) onChange;
 
   factory JapanesePrefecturePickerViewItem({
-    required Map<int, String> addresses,
+    required List<AddressItem> addresses,
     required Function(int) onChange,
   }) {
     return JapanesePrefecturePickerViewItem._(
@@ -30,7 +31,7 @@ class JapanesePrefecturePickerViewItem extends StatelessWidget {
       builder: (index) => Container(
         alignment: Alignment.center,
         child: Text(
-          addresses[addresses.keys.elementAt(index)]!,
+          addresses[index].name,
           textAlign: TextAlign.start,
         ),
       ),

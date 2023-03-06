@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:japanese_prefecture_picker/src/data/address.dart';
-import 'package:japanese_prefecture_picker/src/data/fake_address.dart';
-import 'package:japanese_prefecture_picker/src/utils/address_util.dart';
+import 'package:japanese_prefecture_picker/src/data/address_item.dart';
 
 class JapanesePrefecturePickerController extends StatefulWidget {
   const JapanesePrefecturePickerController({
@@ -17,8 +19,8 @@ class JapanesePrefecturePickerController extends StatefulWidget {
   /// 引数には新たに選択したアドレスデータが入力される
   final Widget Function(
     Address address,
-    Map<int, String> prefectures,
-    Map<int, String> cites,
+    List<AddressItem> prefectures,
+    List<AddressItem> cites,
     void Function(Address) onChange,
   ) builder;
 
@@ -29,41 +31,70 @@ class JapanesePrefecturePickerController extends StatefulWidget {
 
 class _JapanesePrefecturePickerControllerState
     extends State<JapanesePrefecturePickerController> {
+  /// 全アドレスデータ
+  List addresses = [];
+
   /// 選択されたアドレス
-  Address address = Address();
+  Address selected = Address();
 
   /// 表示する都道府県データ
-  Map<int, String> prefectures = {};
+  List<AddressItem> prefectures = [];
 
   /// 表示する市町村データ
-  Map<int, String> cites = {};
+  List<AddressItem> cites = [];
 
   changeAddress(Address newAddress) {
     /// 選択された都道府県IDに応じて表示する市町村データを生成します。
-    if (address.prefectureId != newAddress.prefectureId) {
-      cites = addUnselectedItems(getCites(newAddress)!);
+    if (selected.prefectureId != newAddress.prefectureId) {
+      cites = addUnselectedItems(cityAddressItems(newAddress.prefectureId));
     }
 
     /// アドレスデータを更新
-    setState(() => address = newAddress);
+    setState(() => selected = newAddress);
+  }
+
+  Future<List> loadAddresses() async {
+    return await json.decode(await rootBundle.loadString(
+      'packages/japanese_prefecture_picker/assets/address_seeds.json',
+    ));
+  }
+
+  List<AddressItem> prefectureAddressItems() {
+    return addresses.map((e) {
+      return AddressItem(e['id'], e['name']);
+    }).toList();
+  }
+
+  List<AddressItem> cityAddressItems(int prefectureId) {
+    for (var address in addresses) {
+      if (address['id'] == prefectureId) {
+        return (address['cites'] as List).map((e) {
+          return AddressItem(e['id'], e['name']);
+        }).toList();
+      }
+    }
+    return [];
   }
 
   @override
   void initState() {
-    prefectures = prefectureIdAndNames(address);
-    cites = addUnselectedItems(getCites(address)!);
+    /// アドレスデータ読み込み
+    Future(() async {
+      addresses = await loadAddresses();
+      prefectures = prefectureAddressItems();
+      cites = addUnselectedItems(cityAddressItems(selected.prefectureId));
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(address, prefectures, cites, changeAddress);
+    return widget.builder(selected, prefectures, cites, changeAddress);
   }
 
   /// 未選択項目を追加
-  Map<int, String> addUnselectedItems(Map<int, String> addresses) {
-    final data = {-1: '未選択'};
-    data.addAll(addresses);
-    return data;
+  List<AddressItem> addUnselectedItems(List<AddressItem> addresses) {
+    final unselectedItems = AddressItem(-1, '未選択');
+    return [unselectedItems, ...addresses];
   }
 }
