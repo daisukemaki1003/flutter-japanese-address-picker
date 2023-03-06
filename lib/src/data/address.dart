@@ -1,4 +1,4 @@
-import 'fake_address.dart';
+import 'package:japanese_prefecture_picker/src/utils/address_util.dart';
 
 class Address {
   /// 都道府県ID
@@ -19,13 +19,10 @@ class Address {
     );
   }
 
-  Object? _prefectureName() => getPrefectures(this)?['prefecture'];
-  String? _cityName() => getCites(this)?[cityId];
-
   /// 都道府県名
   String get prefecture {
     try {
-      return _prefectureName() as String;
+      return getPrefectures(this)?['prefecture'] as String;
     } catch (e) {
       return '未選択';
     }
@@ -34,25 +31,9 @@ class Address {
   /// 市町村名
   String get city {
     try {
-      return _cityName() as String;
+      return getCites(this)?[cityId] as String;
     } catch (e) {
       return '未選択';
     }
   }
-}
-
-Map<String, Object>? getPrefectures(Address address) {
-  return test_json_data[address.prefectureId];
-}
-
-Map<int, String>? getCites(Address address) {
-  return getPrefectures(address)!['cites'] as Map<int, String>;
-}
-
-Map<int, String> prefectureIdAndNames(Address address) {
-  final Map<int, String> data = {};
-  test_json_data.forEach((key, value) {
-    data[key] = value['prefecture'] as String;
-  });
-  return data;
 }

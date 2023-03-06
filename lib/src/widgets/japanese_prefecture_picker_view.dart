@@ -32,12 +32,6 @@ class JapanesePrefecturePickerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // /// 表示する都道府県データ
-    // final prefectures = prefectureIdAndNames(address);
-
-    // /// 表示する市町村データ
-    // final cites = addUnselectedItems(getCites(address)!);
-
     return Expanded(
       child: Row(children: [
         JapanesePrefecturePickerViewItem(

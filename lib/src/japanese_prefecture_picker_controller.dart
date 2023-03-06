@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:japanese_prefecture_picker/src/data/address.dart';
 import 'package:japanese_prefecture_picker/src/data/fake_address.dart';
+import 'package:japanese_prefecture_picker/src/utils/address_util.dart';
 
 class JapanesePrefecturePickerController extends StatefulWidget {
   const JapanesePrefecturePickerController({
@@ -31,26 +32,31 @@ class _JapanesePrefecturePickerControllerState
   /// 選択されたアドレス
   Address address = Address();
 
-  // /// 表示する都道府県データ
+  /// 表示する都道府県データ
   Map<int, String> prefectures = {};
 
-  changeAddress(newAddress) {
+  /// 表示する市町村データ
+  Map<int, String> cites = {};
+
+  changeAddress(Address newAddress) {
+    /// 選択された都道府県IDに応じて表示する市町村データを生成します。
+    if (address.prefectureId != newAddress.prefectureId) {
+      cites = addUnselectedItems(getCites(newAddress)!);
+    }
+
+    /// アドレスデータを更新
     setState(() => address = newAddress);
   }
 
   @override
   void initState() {
-    print('init');
     prefectures = prefectureIdAndNames(address);
+    cites = addUnselectedItems(getCites(address)!);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    /// 選択された都道府県IDに応じて表示する市町村データを生成します。
-    /// TODO 都道府県データが更新された場合のみデータの更新するように修正
-    final cites = addUnselectedItems(getCites(address)!);
-
     return widget.builder(address, prefectures, cites, changeAddress);
   }
 
