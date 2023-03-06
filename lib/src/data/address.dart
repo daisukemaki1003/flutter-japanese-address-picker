@@ -5,16 +5,26 @@ class Address {
   /// 都道府県ID
   final int prefectureId;
 
-  /// 市町村名
-  final String cityName;
+  // /// 市町村名
+  // final String cityName;
 
-  /// 都道府県名
-  final String prefectureName;
+  // /// 都道府県名
+  // final String prefectureName;
 
   Address({
-    required this.cityId,
-    required this.prefectureId,
-    required this.cityName,
-    required this.prefectureName,
+    this.cityId = 0,
+    this.prefectureId = 0,
+    // required this.cityName,
+    // required this.prefectureName,
   });
+
+  Address copyWith({int? cityId, int? prefectureId}) {
+    return Address(
+      cityId: cityId ?? this.cityId,
+      prefectureId: prefectureId ?? this.prefectureId,
+    );
+  }
+
+  cityName() {}
+  prefectureName() {}
 }
