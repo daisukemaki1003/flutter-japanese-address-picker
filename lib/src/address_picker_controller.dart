@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:japanese_prefecture_picker/src/data/address.dart';
+import 'package:japanese_prefecture_picker/src/address_model.dart';
 
 class JapanesePrefecturePickerController extends StatefulWidget {
   const JapanesePrefecturePickerController({

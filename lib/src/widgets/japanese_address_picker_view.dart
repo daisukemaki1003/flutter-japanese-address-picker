@@ -2,12 +2,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/data/address.dart';
-import 'package:japanese_prefecture_picker/src/japanese_prefecture_picker_theme.dart';
-import 'package:japanese_prefecture_picker/src/widgets/japanese_prefecture_picker_view_item.dart';
+import 'package:japanese_prefecture_picker/src/address_model.dart';
+import 'package:japanese_prefecture_picker/src/address_picker_theme.dart';
+import 'package:japanese_prefecture_picker/src/widgets/japanese_address_picker_view_item.dart';
 
-class JapanesePrefecturePickerView extends StatelessWidget {
-  JapanesePrefecturePickerView({
+class JapaneseAddressPickerView extends StatelessWidget {
+  JapaneseAddressPickerView({
     Key? key,
     required this.theme,
     required this.address,
@@ -34,13 +34,13 @@ class JapanesePrefecturePickerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(children: [
-        JapanesePrefecturePickerViewItem(
+        JapaneseAddressPickerViewItem(
           addresses: prefectures,
           onChange: (index) => onChange(
             address?.copyWith(prefecture: prefectures[index]),
           ),
         ),
-        JapanesePrefecturePickerViewItem(
+        JapaneseAddressPickerViewItem(
           addresses: cites,
           onChange: (index) => onChange(
             address?.copyWith(city: cites[index]),

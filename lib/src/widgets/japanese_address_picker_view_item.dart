@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/data/address.dart';
+import 'package:japanese_prefecture_picker/src/address_model.dart';
 
-class JapanesePrefecturePickerViewItem extends StatelessWidget {
-  const JapanesePrefecturePickerViewItem._({
+class JapaneseAddressPickerViewItem extends StatelessWidget {
+  const JapaneseAddressPickerViewItem._({
     required this.itemCount,
     required this.builder,
     required this.onChange,
@@ -21,11 +21,11 @@ class JapanesePrefecturePickerViewItem extends StatelessWidget {
   /// 引数には選択されたアドレスのKeyのIndexが返されます
   final Function(int index) onChange;
 
-  factory JapanesePrefecturePickerViewItem({
+  factory JapaneseAddressPickerViewItem({
     required List<AddressItem> addresses,
     required Function(int) onChange,
   }) {
-    return JapanesePrefecturePickerViewItem._(
+    return JapaneseAddressPickerViewItem._(
       onChange: onChange,
       itemCount: addresses.length,
       builder: (index) => Container(
