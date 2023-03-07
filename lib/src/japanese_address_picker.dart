@@ -143,17 +143,15 @@ class _JapaneseAddressPickerState
 
   void refreshScrollOffset() {
     prefScrollController = FixedExtentScrollController(
-      initialItem: route.initialPrefectureId ?? 0,
+      initialItem: controller.getSelectedPrefectureIndex(),
     );
     cityScrollController = FixedExtentScrollController(
-      initialItem: route.initialCityId ?? 0,
+      initialItem: controller.getSelectedCityIndex(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    print("rebuild");
-
     return GestureDetector(
       child: AnimatedBuilder(
         animation: route.animation!,
@@ -195,6 +193,7 @@ class _JapaneseAddressPickerState
               selectedChangedWhenScrolling: controller.selectedPrefecture,
               selectedChangedWhenScrollEnd: (address) {
                 setState(() {
+                  controller.setCites(address.id);
                   refreshScrollOffset();
                   _notifyDateChanged();
                 });
@@ -207,7 +206,6 @@ class _JapaneseAddressPickerState
               selectedChangedWhenScrolling: controller.selectedCity,
               selectedChangedWhenScrollEnd: (address) {
                 setState(() {
-                  refreshScrollOffset();
                   _notifyDateChanged();
                 });
               },
