@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/address_model.dart';
-import 'package:japanese_prefecture_picker/src/address_picker_controller.dart';
-import 'package:japanese_prefecture_picker/src/address_picker_theme.dart';
-import 'package:japanese_prefecture_picker/src/widgets/japanese_address_picker_header.dart';
-import 'package:japanese_prefecture_picker/src/widgets/japanese_address_picker_view.dart';
+import 'package:flutter_japanese_address_picker/src/address_model.dart';
+import 'package:flutter_japanese_address_picker/src/japanese_address_picker_controller.dart';
+import 'package:flutter_japanese_address_picker/src/japanese_address_picker_theme.dart';
+import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_header.dart';
+import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_view.dart';
 
 typedef AddressChangedCallback = Function(Address address);
 
-class JapanesePrefecturePicker {
+class JapaneseAddressPicker {
   /// [showHeader]ボトムソートにヘッダーを表示するか
   /// falseの場合はヘッダーを表示しない
   static Future<Address?> showBottomSheet(
@@ -15,25 +15,25 @@ class JapanesePrefecturePicker {
     bool showHeader = true,
     VoidCallback? onCancel,
     AddressChangedCallback? onChanged,
-    JapanesePrefecturePickerTheme? theme,
+    JapaneseAddressPickerTheme? theme,
   }) async {
     return await Navigator.push<Address>(
       context,
-      _JapanesePrefecturePickerRoute(
+      _JapaneseAddressPickerRoute(
         showHeader: showHeader,
         onChanged: onChanged,
         barrierLabel: MaterialLocalizations.of(
           context,
         ).modalBarrierDismissLabel,
-        theme: theme ?? JapanesePrefecturePickerTheme(),
+        theme: theme ?? JapaneseAddressPickerTheme(),
       ),
     );
   }
 }
 
 // ignore: unused_element
-class _JapanesePrefecturePickerRoute<T> extends PopupRoute<T> {
-  _JapanesePrefecturePickerRoute({
+class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
+  _JapaneseAddressPickerRoute({
     required this.showHeader,
     this.onChanged,
     this.barrierLabel,
@@ -49,8 +49,8 @@ class _JapanesePrefecturePickerRoute<T> extends PopupRoute<T> {
   /// 選択された都道府県市データを返します
   final AddressChangedCallback? onChanged;
 
-  /// [JapanesePrefecturePickerTheme]のスタイルを制御
-  final JapanesePrefecturePickerTheme theme;
+  /// [JapaneseAddressPickerTheme]のスタイルを制御
+  final JapaneseAddressPickerTheme theme;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -86,26 +86,25 @@ class _JapanesePrefecturePickerRoute<T> extends PopupRoute<T> {
       MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: _JapanesePrefecturePickerComponent(this),
+        child: _JapaneseAddressPickerComponent(this),
       ),
     );
   }
 }
 
-class _JapanesePrefecturePickerComponent extends StatefulWidget {
-  const _JapanesePrefecturePickerComponent(this.route, {Key? key})
+class _JapaneseAddressPickerComponent extends StatefulWidget {
+  const _JapaneseAddressPickerComponent(this.route, {Key? key})
       : super(key: key);
 
-  final _JapanesePrefecturePickerRoute route;
+  final _JapaneseAddressPickerRoute route;
   // FixedExtentScrollController leftScrollCtrl, middleScrollCtrl, rightScrollCtrl;
 
   @override
-  State<StatefulWidget> createState() =>
-      _JapanesePrefecturePickerComponentState();
+  State<StatefulWidget> createState() => _JapaneseAddressPickerComponentState();
 }
 
-class _JapanesePrefecturePickerComponentState
-    extends State<_JapanesePrefecturePickerComponent> {
+class _JapaneseAddressPickerComponentState
+    extends State<_JapaneseAddressPickerComponent> {
   @override
   void initState() {
     super.initState();
@@ -120,13 +119,13 @@ class _JapanesePrefecturePickerComponentState
       animation: widget.route.animation!,
       builder: (BuildContext context, Widget? child) {
         return CustomSingleChildLayout(
-          delegate: _JapanesePrefecturePickerLayout(
+          delegate: _JapaneseAddressPickerLayout(
             theme: theme,
             progress: widget.route.animation!.value,
             bottomPadding: MediaQuery.of(context).padding.bottom,
             showHeader: widget.route.showHeader,
           ),
-          child: JapanesePrefecturePickerController(
+          child: JapaneseAddressPickerController(
             builder: (address, prefectures, cites, onChange) {
               return Column(
                 children: [
@@ -153,13 +152,13 @@ class _JapanesePrefecturePickerComponentState
 }
 
 /// Pickerのレイアウト
-class _JapanesePrefecturePickerLayout extends SingleChildLayoutDelegate {
-  final JapanesePrefecturePickerTheme theme;
+class _JapaneseAddressPickerLayout extends SingleChildLayoutDelegate {
+  final JapaneseAddressPickerTheme theme;
   final double progress;
   final double bottomPadding;
   final bool showHeader;
 
-  _JapanesePrefecturePickerLayout({
+  _JapaneseAddressPickerLayout({
     required this.theme,
     required this.progress,
     this.bottomPadding = 0,
@@ -186,7 +185,7 @@ class _JapanesePrefecturePickerLayout extends SingleChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(_JapanesePrefecturePickerLayout oldDelegate) {
+  bool shouldRelayout(_JapaneseAddressPickerLayout oldDelegate) {
     return progress != oldDelegate.progress;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/address_picker_theme.dart';
+import 'package:flutter_japanese_address_picker/src/japanese_address_picker_theme.dart';
 
 class JapaneseAddressPickerHeader extends StatelessWidget {
   JapaneseAddressPickerHeader({
@@ -9,7 +9,7 @@ class JapaneseAddressPickerHeader extends StatelessWidget {
     required this.onSave,
   }) : super(key: key);
 
-  final JapanesePrefecturePickerTheme theme;
+  final JapaneseAddressPickerTheme theme;
 
   /// 当道府県データの選択をキャンセルした時の処理
   final VoidCallback? onCansel;

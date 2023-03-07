@@ -1,4 +1,4 @@
-package com.example.japanese_prefecture_picker
+package com.example.flutter_japanese_address_picker
 
 import io.flutter.embedding.android.FlutterActivity
 

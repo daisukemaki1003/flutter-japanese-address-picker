@@ -1,6 +1,6 @@
 {
-    "name": "japanese_prefecture_picker",
-    "short_name": "japanese_prefecture_picker",
+    "name": "flutter_japanese_address_picker",
+    "short_name": "flutter_japanese_address_picker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

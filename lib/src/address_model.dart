@@ -1,6 +1,5 @@
-
 /// [AddressItem]で定義された[prefecture]都道府県と[city]市町村で構成される
-/// このデータモデルはJapanesePrefecturePickerの返り値として利用されます。
+/// このデータモデルはJapaneseAddressPickerの返り値として利用されます。
 class Address {
   /// 都道府県
   final AddressItem prefecture;

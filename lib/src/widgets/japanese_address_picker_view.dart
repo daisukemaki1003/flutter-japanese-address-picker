@@ -2,9 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/address_model.dart';
-import 'package:japanese_prefecture_picker/src/address_picker_theme.dart';
-import 'package:japanese_prefecture_picker/src/widgets/japanese_address_picker_view_item.dart';
+import 'package:flutter_japanese_address_picker/src/address_model.dart';
+import 'package:flutter_japanese_address_picker/src/japanese_address_picker_theme.dart';
+import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_view_item.dart';
 
 class JapaneseAddressPickerView extends StatelessWidget {
   JapaneseAddressPickerView({
@@ -16,7 +16,7 @@ class JapaneseAddressPickerView extends StatelessWidget {
     required this.onChange,
   }) : super(key: key);
 
-  final JapanesePrefecturePickerTheme theme;
+  final JapaneseAddressPickerTheme theme;
 
   /// 選択中のアドレスデータ
   final Address? address;

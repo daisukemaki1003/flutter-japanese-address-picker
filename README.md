@@ -1,5 +1,5 @@
-# Japanese prefecture picker
-Picker to select prefectures in Japan\
+# Flutter Japanese address picker
+Picker to select address in Japan\
 日本の都道府県を選択することができるピッカーを提供します。
 
 ## Demo
@@ -17,12 +17,12 @@ Offline parameters can be added
 ## Getting started
 1. Add the package to your pubspec.yaml:
 ```
-japanese_prefecture_picker: <latest>
+flutter_japanese_address_picker: <latest>
 ```
 
 2. In your dart file, import the library:
 ```
-import 'package:japanese_prefecture_picker/japanese_prefecture_picker.dart';
+import 'package:flutter_japanese_address_picker/flutter_japanese_address_picker.dart';
 ```
 
 ## Parameters:

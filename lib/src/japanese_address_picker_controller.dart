@@ -1,11 +1,12 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:japanese_prefecture_picker/src/address_model.dart';
+import 'package:flutter_japanese_address_picker/src/address_model.dart';
 
-class JapanesePrefecturePickerController extends StatefulWidget {
-  const JapanesePrefecturePickerController({
+class JapaneseAddressPickerController extends StatefulWidget {
+  const JapaneseAddressPickerController({
     Key? key,
     required this.builder,
   }) : super(key: key);
@@ -25,11 +26,11 @@ class JapanesePrefecturePickerController extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
-      _JapanesePrefecturePickerControllerState();
+      _JapaneseAddressPickerControllerState();
 }
 
-class _JapanesePrefecturePickerControllerState
-    extends State<JapanesePrefecturePickerController> {
+class _JapaneseAddressPickerControllerState
+    extends State<JapaneseAddressPickerController> {
   /// 全アドレスデータ
   List addresses = [];
 
@@ -56,7 +57,7 @@ class _JapanesePrefecturePickerControllerState
 
   Future<List> loadAddresses() async {
     return await json.decode(await rootBundle.loadString(
-      'packages/japanese_prefecture_picker/assets/address_seeds.json',
+      'packages/flutter_japanese_address_picker/assets/address_seeds.json',
     ));
   }
 
