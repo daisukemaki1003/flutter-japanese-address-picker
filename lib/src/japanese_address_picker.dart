@@ -14,8 +14,8 @@ class JapaneseAddressPicker {
   static Future<Address?> showBottomSheet(
     BuildContext context, {
     bool showHeader = true,
-    int? prefectureId,
-    int? cityId,
+    int? initialPrefectureId,
+    int? initialCityId,
     AddressChangedCallback? onChanged,
     JapaneseAddressPickerTheme? theme,
   }) async {
@@ -24,14 +24,16 @@ class JapaneseAddressPicker {
       context,
       _JapaneseAddressPickerRoute(
         showHeader: showHeader,
-        initialPrefectureId: prefectureId,
-        initialCityId: cityId,
         onChanged: onChanged,
         theme: theme ?? JapaneseAddressPickerTheme(),
         barrierLabel: MaterialLocalizations.of(
           context,
         ).modalBarrierDismissLabel,
-        addressPickerController: AddressPickerController(addresses),
+        addressPickerController: AddressPickerController(
+          addresses,
+          initialPrefectureId: initialPrefectureId,
+          initialCityId: initialCityId,
+        ),
       ),
     );
   }
@@ -42,8 +44,6 @@ class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
   _JapaneseAddressPickerRoute({
     required this.showHeader,
     this.onChanged,
-    this.initialPrefectureId,
-    this.initialCityId,
     this.barrierLabel,
     required this.theme,
     required this.addressPickerController,
@@ -57,10 +57,6 @@ class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
   /// ピッカー項目間を移動するときに呼び出されるNullable関数
   /// 選択された都道府県市データを返します
   final AddressChangedCallback? onChanged;
-
-  /// 初期値
-  final int? initialPrefectureId;
-  final int? initialCityId;
 
   /// [JapaneseAddressPickerTheme]のスタイルを制御
   final JapaneseAddressPickerTheme theme;

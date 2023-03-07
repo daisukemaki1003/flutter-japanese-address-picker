@@ -13,22 +13,42 @@ class AddressPickerController {
   /// 表示する市町村データ
   List<AddressItem> cites = [];
 
-  AddressPickerController(this.addresses) {
+  AddressPickerController(
+    this.addresses, {
+    int? initialPrefectureId,
+    int? initialCityId,
+  }) {
     setPrefectures();
-    setCites(0);
-    selected = Address(prefecture: prefectures[0], city: cites[0]);
-  }
-
-  /// 選択中都道府県データのIndexを取得
-  int getSelectedPrefectureIndex() {
-    return prefectures.indexOf(selected!.prefecture);
-  }
-
-  /// 選択中市町村データのIndexを取得
-  int getSelectedCityIndex() {
-    final index = cites.indexWhere(
-      (address) => address.id == selected?.city.id,
+    setCites(initialPrefectureId ?? 0);
+    selected = Address(
+      prefecture: prefectures[getPrefectureIndexById(initialPrefectureId ?? 0)],
+      city: cites[getCityIndexById(initialCityId ?? -1)],
     );
+  }
+
+  /// 選択中の都道府県データのIndexを取得
+  int getSelectedPrefectureIndex() {
+    return getPrefectureIndexById(selected!.prefecture.id);
+  }
+
+  /// 市町村データのIndexを取得
+  int getPrefectureIndexById(int id) {
+    return getIndexById(prefectures, id);
+  }
+
+  /// 選択中の市町村データのIndexを取得
+  int getSelectedCityIndex() {
+    return getCityIndexById(selected!.city.id);
+  }
+
+  /// 市町村データのIndexを取得
+  int getCityIndexById(int id) {
+    return getIndexById(cites, id);
+  }
+
+  /// Indexを取得
+  int getIndexById(List<AddressItem> addresses, int id) {
+    final index = addresses.indexWhere((element) => element.id == id);
     if (index < 0) return 0;
     return index;
   }
