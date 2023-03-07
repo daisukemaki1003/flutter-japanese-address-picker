@@ -3,52 +3,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter_japanese_address_picker/src/address_model.dart';
 
 class JapaneseAddressPickerViewItem extends StatelessWidget {
-  const JapaneseAddressPickerViewItem._({
-    required this.itemCount,
-    required this.builder,
-    required this.onChange,
+  const JapaneseAddressPickerViewItem({
+    this.valueKey,
+    required this.addresses,
+    required this.scrollController,
+    required this.selectedChangedWhenScrolling,
+    required this.selectedChangedWhenScrollEnd,
   });
 
-  /// 表示するアイテム数
-  /// [itemCount]の回数分[builder]関数を実行しWidgetを生成します。
-  final int itemCount;
+  final ValueKey? valueKey;
 
-  /// 表示するアドレスデータを生成
-  /// 引数には実行回数が入り、この関数は[itemCount]の数だけ実行されます。
-  final Widget Function(int index) builder;
+  /// 表示するアドレスデータリスト
+  final List<AddressItem> addresses;
+
+  final FixedExtentScrollController? scrollController;
 
   /// アドレスデータが変更された際に呼び出される関数
-  /// 引数には選択されたアドレスのKeyのIndexが返されます
-  final Function(int index) onChange;
-
-  factory JapaneseAddressPickerViewItem({
-    required List<AddressItem> addresses,
-    required Function(int) onChange,
-  }) {
-    return JapaneseAddressPickerViewItem._(
-      onChange: onChange,
-      itemCount: addresses.length,
-      builder: (index) => Container(
-        alignment: Alignment.center,
-        child: Text(
-          addresses[index].name,
-          textAlign: TextAlign.start,
-        ),
-      ),
-    );
-  }
+  final ValueChanged<AddressItem> selectedChangedWhenScrolling;
+  final ValueChanged<AddressItem> selectedChangedWhenScrollEnd;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: NotificationListener(
-        /// TODO スクロールが終了した時に市町村データを更新する
-        child: CupertinoPicker(
+        onNotification: (ScrollNotification notification) {
+          if (notification.depth == 0 &&
+              notification is ScrollEndNotification &&
+              notification.metrics is FixedExtentMetrics) {
+            final FixedExtentMetrics metrics =
+                notification.metrics as FixedExtentMetrics;
+            final int currentItemIndex = metrics.itemIndex;
+            selectedChangedWhenScrollEnd(addresses[currentItemIndex]);
+          }
+          return false;
+        },
+        child: CupertinoPicker.builder(
+          key: valueKey,
           itemExtent: 35.0,
           useMagnifier: true,
           backgroundColor: Colors.white,
-          onSelectedItemChanged: onChange,
-          children: List.generate(itemCount, builder).toList(),
+          scrollController: scrollController,
+          onSelectedItemChanged: (index) {
+            selectedChangedWhenScrolling(addresses[index]);
+          },
+          childCount: addresses.length,
+          itemBuilder: (context, index) {
+            return Container(
+              alignment: Alignment.center,
+              child: Text(
+                addresses[index].name,
+                textAlign: TextAlign.start,
+              ),
+            );
+          },
         ),
       ),
     );

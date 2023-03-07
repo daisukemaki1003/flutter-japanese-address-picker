@@ -50,8 +50,16 @@ class ExampleApp extends StatelessWidget {
   }
 
   _showButtomPicker(BuildContext context) async {
-    // DateTimePickerModel
-    final address = await JapaneseAddressPicker.showBottomSheet(context);
+    // DatePicker.showDatePicker(context);
+    final address = await JapaneseAddressPicker.showBottomSheet(
+      context,
+      initialPrefectureId: 3,
+      initialCityId: 65,
+      onChanged: (address) {
+        print(address.prefecture.name);
+        print(address.city.name);
+      },
+    );
     if (address != null) {
       print(address.prefecture.name);
       print(address.city.name);
