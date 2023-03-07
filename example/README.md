@@ -1,4 +1,4 @@
-# japanese_prefecture_picker
+# flutter_japanese_address_picker
 
 A new Flutter project.
 

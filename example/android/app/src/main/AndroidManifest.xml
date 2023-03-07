@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.japanese_prefecture_picker">
+    package="com.example.flutter_japanese_address_picker">
    <application
-        android:label="japanese_prefecture_picker"
+        android:label="flutter_japanese_address_picker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

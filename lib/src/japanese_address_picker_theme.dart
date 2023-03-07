@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class JapanesePrefecturePickerTheme {
+class JapaneseAddressPickerTheme {
   /// -------- overall --------
   final double containerHeight;
   final double headerHeight;
@@ -21,7 +21,7 @@ class JapanesePrefecturePickerTheme {
   final Color bodyColor;
   final TextStyle itemStyle;
 
-  JapanesePrefecturePickerTheme({
+  JapaneseAddressPickerTheme({
     this.containerHeight = 250.0,
     this.headerHeight = 45.0,
     this.itemHeight = 36.0,
