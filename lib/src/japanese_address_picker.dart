@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_japanese_address_picker/src/address_model.dart';
-import 'package:flutter_japanese_address_picker/src/japanese_address_picker_controller.dart';
+import 'package:flutter_japanese_address_picker/src/address_picker_controller.dart';
+import 'package:flutter_japanese_address_picker/src/address_util.dart';
 import 'package:flutter_japanese_address_picker/src/japanese_address_picker_theme.dart';
 import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_header.dart';
-import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_view.dart';
+import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_view_item.dart';
 
 typedef AddressChangedCallback = Function(Address address);
 
@@ -13,19 +14,24 @@ class JapaneseAddressPicker {
   static Future<Address?> showBottomSheet(
     BuildContext context, {
     bool showHeader = true,
-    VoidCallback? onCancel,
+    int? prefectureId,
+    int? cityId,
     AddressChangedCallback? onChanged,
     JapaneseAddressPickerTheme? theme,
   }) async {
+    final addresses = await loadAddresses();
     return await Navigator.push<Address>(
       context,
       _JapaneseAddressPickerRoute(
         showHeader: showHeader,
+        initialPrefectureId: prefectureId,
+        initialCityId: cityId,
         onChanged: onChanged,
+        theme: theme ?? JapaneseAddressPickerTheme(),
         barrierLabel: MaterialLocalizations.of(
           context,
         ).modalBarrierDismissLabel,
-        theme: theme ?? JapaneseAddressPickerTheme(),
+        addressPickerController: AddressPickerController(addresses),
       ),
     );
   }
@@ -36,8 +42,11 @@ class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
   _JapaneseAddressPickerRoute({
     required this.showHeader,
     this.onChanged,
+    this.initialPrefectureId,
+    this.initialCityId,
     this.barrierLabel,
     required this.theme,
+    required this.addressPickerController,
     RouteSettings? settings,
   }) : super(settings: settings);
 
@@ -49,8 +58,14 @@ class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
   /// 選択された都道府県市データを返します
   final AddressChangedCallback? onChanged;
 
+  /// 初期値
+  final int? initialPrefectureId;
+  final int? initialCityId;
+
   /// [JapaneseAddressPickerTheme]のスタイルを制御
   final JapaneseAddressPickerTheme theme;
+
+  final AddressPickerController addressPickerController;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -93,11 +108,9 @@ class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
 }
 
 class _JapaneseAddressPickerComponent extends StatefulWidget {
-  const _JapaneseAddressPickerComponent(this.route, {Key? key})
-      : super(key: key);
+  _JapaneseAddressPickerComponent(this.route, {Key? key}) : super(key: key);
 
   final _JapaneseAddressPickerRoute route;
-  // FixedExtentScrollController leftScrollCtrl, middleScrollCtrl, rightScrollCtrl;
 
   @override
   State<StatefulWidget> createState() => _JapaneseAddressPickerComponentState();
@@ -105,16 +118,23 @@ class _JapaneseAddressPickerComponent extends StatefulWidget {
 
 class _JapaneseAddressPickerComponentState
     extends State<_JapaneseAddressPickerComponent> {
+  get theme => widget.route.theme;
+  AddressPickerController get controller =>
+      widget.route.addressPickerController;
+
   @override
   void initState() {
+    controller.setPrefScrollController(FixedExtentScrollController(
+      initialItem: widget.route.initialPrefectureId ?? 0,
+    ));
+    controller.setCityScrollController(FixedExtentScrollController(
+      initialItem: widget.route.initialCityId ?? 0,
+    ));
     super.initState();
-    // refreshScrollOffset();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = widget.route.theme;
-
     return AnimatedBuilder(
       animation: widget.route.animation!,
       builder: (BuildContext context, Widget? child) {
@@ -125,25 +145,28 @@ class _JapaneseAddressPickerComponentState
             bottomPadding: MediaQuery.of(context).padding.bottom,
             showHeader: widget.route.showHeader,
           ),
-          child: JapaneseAddressPickerController(
-            builder: (address, prefectures, cites, onChange) {
-              return Column(
-                children: [
-                  JapaneseAddressPickerHeader(
-                    theme: theme,
-                    onCansel: () => Navigator.pop(context),
-                    onSave: () => Navigator.pop(context, address),
+          child: Column(
+            children: [
+              JapaneseAddressPickerHeader(
+                theme: theme,
+                onCansel: () => Navigator.pop(context),
+                onSave: () => Navigator.pop(context, controller.selected),
+              ),
+              Expanded(
+                child: Row(children: [
+                  JapaneseAddressPickerViewItem(
+                    addresses: controller.prefectures,
+                    scrollController: controller.prefScrollController,
+                    onChange: (value) => controller.selectedPrefecture(value),
                   ),
-                  JapaneseAddressPickerView(
-                    theme: theme,
-                    address: address,
-                    prefectures: prefectures,
-                    cites: cites,
-                    onChange: onChange,
+                  JapaneseAddressPickerViewItem(
+                    addresses: controller.cites,
+                    scrollController: controller.cityScrollController,
+                    onChange: (value) => controller.selectedCity(value),
                   ),
-                ],
-              );
-            },
+                ]),
+              ),
+            ],
           ),
         );
       },
