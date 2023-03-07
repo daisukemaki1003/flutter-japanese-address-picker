@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/data/address.dart';
-import 'package:japanese_prefecture_picker/src/japanese_prefecture_picker_controller.dart';
-import 'package:japanese_prefecture_picker/src/japanese_prefecture_picker_theme.dart';
-import 'package:japanese_prefecture_picker/src/widgets/japanese_prefecture_picker_header.dart';
-import 'package:japanese_prefecture_picker/src/widgets/japanese_prefecture_picker_view.dart';
+import 'package:japanese_prefecture_picker/src/address_model.dart';
+import 'package:japanese_prefecture_picker/src/address_picker_controller.dart';
+import 'package:japanese_prefecture_picker/src/address_picker_theme.dart';
+import 'package:japanese_prefecture_picker/src/widgets/japanese_address_picker_header.dart';
+import 'package:japanese_prefecture_picker/src/widgets/japanese_address_picker_view.dart';
 
 typedef AddressChangedCallback = Function(Address address);
 
@@ -130,12 +130,12 @@ class _JapanesePrefecturePickerComponentState
             builder: (address, prefectures, cites, onChange) {
               return Column(
                 children: [
-                  JapanesePrefecturePickerHeader(
+                  JapaneseAddressPickerHeader(
                     theme: theme,
                     onCansel: () => Navigator.pop(context),
                     onSave: () => Navigator.pop(context, address),
                   ),
-                  JapanesePrefecturePickerView(
+                  JapaneseAddressPickerView(
                     theme: theme,
                     address: address,
                     prefectures: prefectures,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:japanese_prefecture_picker/src/japanese_prefecture_picker_theme.dart';
+import 'package:japanese_prefecture_picker/src/address_picker_theme.dart';
 
-class JapanesePrefecturePickerHeader extends StatelessWidget {
-  JapanesePrefecturePickerHeader({
+class JapaneseAddressPickerHeader extends StatelessWidget {
+  JapaneseAddressPickerHeader({
     Key? key,
     required this.theme,
     required this.onCansel,
