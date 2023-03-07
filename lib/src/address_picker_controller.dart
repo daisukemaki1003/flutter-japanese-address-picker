@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_japanese_address_picker/flutter_japanese_address_picker.dart';
-import 'package:flutter_japanese_address_picker/src/address_util.dart';
 
 class AddressPickerController {
   /// 選択されたアドレス
@@ -15,23 +13,10 @@ class AddressPickerController {
   /// 表示する市町村データ
   List<AddressItem> cites = [];
 
-  FixedExtentScrollController? prefScrollController;
-  FixedExtentScrollController? cityScrollController;
-
   AddressPickerController(this.addresses) {
     setPrefectures(addresses);
     setCites(addresses, 0);
     selected = Address(prefecture: prefectures[0], city: cites[0]);
-  }
-
-  /// prefScrollController
-  setPrefScrollController(controller) {
-    prefScrollController = controller;
-  }
-
-  /// prefScrollController
-  setCityScrollController(controller) {
-    cityScrollController = controller;
   }
 
   setAddress(Address? address) {
@@ -55,6 +40,7 @@ class AddressPickerController {
   /// 都道府県を選択する
   void selectedPrefecture(AddressItem address) {
     selected = selected?.copyWith(prefecture: address);
+    setCites(addresses, address.id);
   }
 
   void setPrefectures(List addresses) {

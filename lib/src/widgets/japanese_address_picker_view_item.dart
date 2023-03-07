@@ -4,44 +4,50 @@ import 'package:flutter_japanese_address_picker/src/address_model.dart';
 
 class JapaneseAddressPickerViewItem extends StatelessWidget {
   const JapaneseAddressPickerViewItem({
+    this.valueKey,
     required this.addresses,
-    required this.onChange,
     required this.scrollController,
+    required this.selectedChangedWhenScrolling,
+    required this.selectedChangedWhenScrollEnd,
   });
+
+  final ValueKey? valueKey;
 
   /// 表示するアドレスデータリスト
   final List<AddressItem> addresses;
 
-  /// アドレスデータが変更された際に呼び出される関数
-  /// 引数には選択されたアドレスのKeyのIndexが返されます
-  final Function(AddressItem) onChange;
-
   final FixedExtentScrollController? scrollController;
+
+  /// アドレスデータが変更された際に呼び出される関数
+  final ValueChanged<AddressItem> selectedChangedWhenScrolling;
+  final ValueChanged<AddressItem> selectedChangedWhenScrollEnd;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: NotificationListener(
-        // onNotification: (ScrollNotification notification) {
-        //   if (notification.depth == 0 &&
-        //       notification is ScrollEndNotification &&
-        //       notification.metrics is FixedExtentMetrics) {
-        //     final FixedExtentMetrics metrics =
-        //         notification.metrics as FixedExtentMetrics;
-        //     final int currentItemIndex = metrics.itemIndex;
-        //     selectedChangedWhenScrollEnd(currentItemIndex);
-        //   }
-        //   return false;
-        // },
-
-        /// TODO スクロールが終了した時に市町村データを更新する
-        child: CupertinoPicker(
-          key: key,
+        onNotification: (ScrollNotification notification) {
+          if (notification.depth == 0 &&
+              notification is ScrollEndNotification &&
+              notification.metrics is FixedExtentMetrics) {
+            final FixedExtentMetrics metrics =
+                notification.metrics as FixedExtentMetrics;
+            final int currentItemIndex = metrics.itemIndex;
+            selectedChangedWhenScrollEnd(addresses[currentItemIndex]);
+          }
+          return false;
+        },
+        child: CupertinoPicker.builder(
+          key: valueKey,
           itemExtent: 35.0,
+          useMagnifier: true,
           backgroundColor: Colors.white,
-          scrollController: addresses.isNotEmpty ? scrollController : null,
-          onSelectedItemChanged: (index) => onChange(addresses[index]),
-          children: List.generate(addresses.length, (index) {
+          scrollController: scrollController,
+          onSelectedItemChanged: (index) {
+            selectedChangedWhenScrolling(addresses[index]);
+          },
+          childCount: addresses.length,
+          itemBuilder: (context, index) {
             return Container(
               alignment: Alignment.center,
               child: Text(
@@ -49,7 +55,7 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
                 textAlign: TextAlign.start,
               ),
             );
-          }).toList(),
+          },
         ),
       ),
     );
