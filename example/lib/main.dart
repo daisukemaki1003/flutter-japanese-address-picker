@@ -53,8 +53,6 @@ class ExampleApp extends StatelessWidget {
     // DatePicker.showDatePicker(context);
     final address = await JapaneseAddressPicker.showBottomSheet(
       context,
-      initialPrefectureId: 3,
-      initialCityId: 65,
       onChanged: (address) {
         print(address.prefecture.name);
         print(address.city.name);

@@ -15,14 +15,15 @@ class AddressPickerController {
 
   AddressPickerController(
     this.addresses, {
-    int? initialPrefectureId,
-    int? initialCityId,
+    AddressValue? initialValue,
   }) {
     setPrefectures();
-    setCites(initialPrefectureId ?? 0);
+    setCites(initialValue?.prefectureId ?? 0);
     selected = Address(
-      prefecture: prefectures[getPrefectureIndexById(initialPrefectureId ?? 0)],
-      city: cites[getCityIndexById(initialCityId ?? -1)],
+      prefecture: prefectures[getPrefectureIndexById(
+        initialValue?.prefectureId ?? 0,
+      )],
+      city: cites[getCityIndexById(initialValue?.cityId ?? -1)],
     );
   }
 
