@@ -1,17 +1,13 @@
 # Flutter Japanese address picker
-日本の都道府県を選択することができるピッカーを提供します。  Picker to select address in Japan.
+日本の都道府県を選択することができるピッカーを提供します。<br>Picker to select address in Japan.
 
-## Demo
-```
-TODO
-```
+<image src="https://user-images.githubusercontent.com/68681355/223709931-aaefccde-835a-4bcc-805c-c04ed5b0242c.png" width="200" />
+
 
 #### Features
-- You can select a city in Japan.
 - You can select a prefecture in Japan.
+- You can select a city in Japan.
 - This widget is available as a bottom sheet
-- The data we provide is not limited to t prefectures!
-Offline parameters can be added
 
 ## Getting started
 1. Add the package to your pubspec.yaml:
@@ -28,7 +24,8 @@ import 'package:flutter_japanese_address_picker/flutter_japanese_address_picker.
 
 |  Option  |  Description  |
 | ---- | ---- |
-|  enableOffline  |  Add an offline item.<br>Users can select offline as well as prefectures. |
-|  initialValue  |  Set the initial value.<br>Enter the ID of the prefecture you want to set.<br>For the ID of each prefecture or municipality, please refer to the Ministry of Internal Affairs and Communications' prefectural code or municipal code.<br>https://www.soumu.go.jp/denshijiti/code.html|
-|  allowUnselectedCity  |  Allow unselected city.<br>If enabled, allows selection of prefectures only.  |
+|  showHeader  | Display the header in the picker.<br>If set to false, the header will not be displayed. |
+|  initialValue  |  Set the initial value.<br>Please enter the ID of the prefecture or municipality you want to set or the name of the place.<br>For the ID of each prefecture or municipality, please refer to the Ministry of Internal Affairs and Communications' prefectural code or municipal code.<br>https://www.soumu.go.jp/denshijiti/code.html |
+|  theme  |  Manage the size, style, etc. of the Flutter Japanese address picker.<br>You can also set the text that appears in the header from here.  |
+|  onChanged  |  You can get the selected address data.  |
 
