@@ -27,7 +27,7 @@ class JapaneseAddressPicker {
         theme: theme ?? JapaneseAddressPickerTheme(),
         addressController: AddressPickerController(
           addresses,
-          initialValue: initialValue,
+          initialValue ?? AddressValue(),
         ),
       ),
     );
