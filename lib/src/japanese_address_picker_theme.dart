@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class JapaneseAddressPickerTheme {
@@ -31,7 +30,7 @@ class JapaneseAddressPickerTheme {
     this.headerCansel = "キャンセル",
     this.headerSave = "保存",
     this.headerTitleStyle = const TextStyle(
-      color: Colors.black54,
+      color: Colors.black,
       fontSize: 16,
     ),
     this.headerCanselStyle = const TextStyle(
