@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_japanese_address_picker/src/address_model.dart';
-import 'package:flutter_japanese_address_picker/src/address_picker_controller.dart';
+import 'package:flutter_japanese_address_picker/src/address_picker_model.dart';
 import 'package:flutter_japanese_address_picker/src/address_util.dart';
 import 'package:flutter_japanese_address_picker/src/japanese_address_picker_theme.dart';
 import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_header.dart';
@@ -25,7 +25,7 @@ class JapaneseAddressPicker {
         showHeader: showHeader,
         onChanged: onChanged,
         theme: theme ?? JapaneseAddressPickerTheme(),
-        addressController: AddressPickerController(
+        model: AddressPickerModel(
           addresses,
           initialValue ?? AddressValue(),
         ),
@@ -40,7 +40,7 @@ class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
     required this.showHeader,
     this.onChanged,
     required this.theme,
-    required this.addressController,
+    required this.model,
     RouteSettings? settings,
   }) : super(settings: settings);
 
@@ -55,7 +55,7 @@ class _JapaneseAddressPickerRoute<T> extends PopupRoute<T> {
   /// [JapaneseAddressPickerTheme]のスタイルを制御
   final JapaneseAddressPickerTheme theme;
 
-  final AddressPickerController addressController;
+  final AddressPickerModel model;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -109,7 +109,7 @@ class _JapaneseAddressPicker extends StatefulWidget {
 class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
   _JapaneseAddressPickerRoute get route => widget.route;
   JapaneseAddressPickerTheme get theme => route.theme;
-  AddressPickerController get controller => route.addressController;
+  AddressPickerModel get model => route.model;
 
   FixedExtentScrollController? prefScrollController;
   FixedExtentScrollController? cityScrollController;
@@ -121,16 +121,16 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
   }
 
   void onChangeAddress() {
-    if (controller.selected == null) return;
-    route.onChanged?.call(controller.selected!);
+    if (model.selected == null) return;
+    route.onChanged?.call(model.selected!);
   }
 
   void refreshScroll() {
     prefScrollController = FixedExtentScrollController(
-      initialItem: controller.getSelectedPrefectureIndex(),
+      initialItem: model.getSelectedPrefectureIndex(),
     );
     cityScrollController = FixedExtentScrollController(
-      initialItem: controller.getSelectedCityIndex(),
+      initialItem: model.getSelectedCityIndex(),
     );
   }
 
@@ -151,28 +151,28 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
               JapaneseAddressPickerHeader(
                 theme: theme,
                 onCansel: () => Navigator.pop(context),
-                onSave: () => Navigator.pop(context, controller.selected),
+                onSave: () => Navigator.pop(context, model.selected),
               ),
               Expanded(
                 child: Row(children: [
                   JapaneseAddressPickerViewItem(
-                    valueKey: ValueKey(controller.selected?.prefecture.id),
-                    addresses: controller.prefectures,
+                    valueKey: ValueKey(model.selected?.prefecture.id),
+                    addresses: model.prefectures,
                     scrollController: prefScrollController,
-                    onSelectedItemChanged: controller.selectedPrefecture,
+                    onSelectedItemChanged: model.selectedPrefecture,
                     onSelectedItemChangedWhenScrollEnd: (address) {
                       setState(() {
-                        controller.setCites(address.id);
+                        model.setCites(address.id);
                         refreshScroll();
                         onChangeAddress();
                       });
                     },
                   ),
                   JapaneseAddressPickerViewItem(
-                    valueKey: ValueKey(controller.selected?.prefecture.id),
-                    addresses: controller.cites,
+                    valueKey: ValueKey(model.selected?.prefecture.id),
+                    addresses: model.cites,
                     scrollController: cityScrollController,
-                    onSelectedItemChanged: controller.selectedCity,
+                    onSelectedItemChanged: model.selectedCity,
                     onSelectedItemChangedWhenScrollEnd: (address) {
                       setState(() => onChangeAddress());
                     },

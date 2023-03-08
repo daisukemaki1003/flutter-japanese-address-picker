@@ -1,6 +1,6 @@
 import 'package:flutter_japanese_address_picker/flutter_japanese_address_picker.dart';
 
-class AddressPickerController {
+class AddressPickerModel {
   /// 選択されたアドレス
   Address? selected;
 
@@ -13,7 +13,7 @@ class AddressPickerController {
   /// 表示する市町村データ
   List<AddressItem> cites = [];
 
-  AddressPickerController(this.addresses, AddressValue initialValue) {
+  AddressPickerModel(this.addresses, AddressValue initialValue) {
     setPrefectures();
     setCites(initialValue.prefectureId ?? 0);
     initialization(initialValue);
