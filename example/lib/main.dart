@@ -39,32 +39,19 @@ class ExampleApp extends StatelessWidget {
           SizedBox(
             width: buttonWidth,
             child: ElevatedButton(
-              onPressed: () => _showButtomPicker(context),
+              onPressed: () async {
+                await JapaneseAddressPicker.showBottomSheet(
+                  context,
+                  showHeader: true,
+                  theme: JapaneseAddressPickerTheme(headerTitle: "居住地"),
+                  initialValue: AddressValue(prefectureId: 1, cityId: 40),
+                );
+              },
               child: const Text('Open picker'),
             ),
           ),
         ],
       ),
     );
-  }
-
-  _showButtomPicker(BuildContext context) async {
-    final address = await JapaneseAddressPicker.showBottomSheet(
-      context,
-      initialValue: AddressValue(
-        prefectureId: 1,
-        cityId: 40,
-      ),
-      onChanged: (address) {
-        print(address.prefecture.name);
-        print(address.city.name);
-      },
-    );
-    if (address != null) {
-      print(address.prefecture.name);
-      print(address.city.name);
-    } else {
-      print("no response");
-    }
   }
 }

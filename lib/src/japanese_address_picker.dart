@@ -146,40 +146,42 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
             progress: route.animation!.value,
             bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
-          child: Column(
-            children: [
-              JapaneseAddressPickerHeader(
-                theme: theme,
-                onCansel: () => Navigator.pop(context),
-                onSave: () => Navigator.pop(context, model.selected),
-              ),
-              Expanded(
-                child: Row(children: [
-                  JapaneseAddressPickerViewItem(
-                    valueKey: ValueKey(model.selected?.prefecture.id),
-                    addresses: model.prefectures,
-                    scrollController: prefScrollController,
-                    onSelectedItemChanged: model.selectedPrefecture,
-                    onSelectedItemChangedWhenScrollEnd: (address) {
-                      setState(() {
-                        model.setCites(address.id);
-                        refreshScroll();
-                        onChangeAddress();
-                      });
-                    },
-                  ),
-                  JapaneseAddressPickerViewItem(
-                    valueKey: ValueKey(model.selected?.prefecture.id),
-                    addresses: model.cites,
-                    scrollController: cityScrollController,
-                    onSelectedItemChanged: model.selectedCity,
-                    onSelectedItemChangedWhenScrollEnd: (address) {
-                      setState(() => onChangeAddress());
-                    },
-                  ),
-                ]),
-              ),
-            ],
+          child: Material(
+            child: Column(
+              children: [
+                JapaneseAddressPickerHeader(
+                  theme: theme,
+                  onCansel: () => Navigator.pop(context),
+                  onSave: () => Navigator.pop(context, model.selected),
+                ),
+                Expanded(
+                  child: Row(children: [
+                    JapaneseAddressPickerViewItem(
+                      valueKey: ValueKey(model.selected?.prefecture.id),
+                      addresses: model.prefectures,
+                      scrollController: prefScrollController,
+                      onSelectedItemChanged: model.selectedPrefecture,
+                      onSelectedItemChangedWhenScrollEnd: (address) {
+                        setState(() {
+                          model.setCites(address.id);
+                          refreshScroll();
+                          onChangeAddress();
+                        });
+                      },
+                    ),
+                    JapaneseAddressPickerViewItem(
+                      valueKey: ValueKey(model.selected?.prefecture.id),
+                      addresses: model.cites,
+                      scrollController: cityScrollController,
+                      onSelectedItemChanged: model.selectedCity,
+                      onSelectedItemChangedWhenScrollEnd: (address) {
+                        setState(() => onChangeAddress());
+                      },
+                    ),
+                  ]),
+                ),
+              ],
+            ),
           ),
         );
       },
