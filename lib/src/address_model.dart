@@ -1,3 +1,5 @@
+typedef AddressID = int;
+
 /// [AddressItem]で定義された[prefecture]都道府県と[city]市町村で構成される
 /// このデータモデルはJapaneseAddressPickerの返り値として利用されます。
 class Address {
@@ -25,10 +27,26 @@ class Address {
 /// 都道府県データ・市町村データ共に利用します
 class AddressItem {
   /// アドレスID
-  final int id;
+  final AddressID id;
 
   /// 地名
   final String name;
 
   AddressItem(this.id, this.name);
+}
+
+/// ユーザーがピッカーに初期値を与える際に利用します。
+class AddressValue {
+  final AddressID? cityId;
+  final AddressID? prefectureId;
+
+  final String? cityName;
+  final String? prefectureName;
+
+  AddressValue({
+    this.cityId,
+    this.prefectureId,
+    this.cityName,
+    this.prefectureName,
+  });
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_japanese_address_picker/flutter_japanese_address_picker.dart';
 
 void main() {
@@ -50,11 +49,12 @@ class ExampleApp extends StatelessWidget {
   }
 
   _showButtomPicker(BuildContext context) async {
-    // DatePicker.showDatePicker(context);
     final address = await JapaneseAddressPicker.showBottomSheet(
       context,
-      initialPrefectureId: 3,
-      initialCityId: 65,
+      initialValue: AddressValue(
+        prefectureId: 1,
+        cityId: 40,
+      ),
       onChanged: (address) {
         print(address.prefecture.name);
         print(address.city.name);

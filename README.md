@@ -1,6 +1,5 @@
 # Flutter Japanese address picker
-Picker to select address in Japan\
-日本の都道府県を選択することができるピッカーを提供します。
+日本の都道府県を選択することができるピッカーを提供します。  Picker to select address in Japan.
 
 ## Demo
 ```

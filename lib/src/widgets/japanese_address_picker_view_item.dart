@@ -7,8 +7,8 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
     this.valueKey,
     required this.addresses,
     required this.scrollController,
-    required this.selectedChangedWhenScrolling,
-    required this.selectedChangedWhenScrollEnd,
+    required this.onSelectedItemChanged,
+    required this.onSelectedItemChangedWhenScrollEnd,
   });
 
   final ValueKey? valueKey;
@@ -19,8 +19,8 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
   final FixedExtentScrollController? scrollController;
 
   /// アドレスデータが変更された際に呼び出される関数
-  final ValueChanged<AddressItem> selectedChangedWhenScrolling;
-  final ValueChanged<AddressItem> selectedChangedWhenScrollEnd;
+  final ValueChanged<AddressItem> onSelectedItemChanged;
+  final ValueChanged<AddressItem> onSelectedItemChangedWhenScrollEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
             final FixedExtentMetrics metrics =
                 notification.metrics as FixedExtentMetrics;
             final int currentItemIndex = metrics.itemIndex;
-            selectedChangedWhenScrollEnd(addresses[currentItemIndex]);
+            onSelectedItemChangedWhenScrollEnd(addresses[currentItemIndex]);
           }
           return false;
         },
@@ -44,7 +44,7 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
           backgroundColor: Colors.white,
           scrollController: scrollController,
           onSelectedItemChanged: (index) {
-            selectedChangedWhenScrolling(addresses[index]);
+            onSelectedItemChanged(addresses[index]);
           },
           childCount: addresses.length,
           itemBuilder: (context, index) {
