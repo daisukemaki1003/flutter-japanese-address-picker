@@ -44,7 +44,6 @@ class ExampleApp extends StatelessWidget {
                   context,
                   showHeader: true,
                   theme: JapaneseAddressPickerTheme(headerTitle: "居住地"),
-                  initialValue: AddressValue(prefectureId: 1, cityId: 40),
                 );
               },
               child: const Text('Open picker'),
