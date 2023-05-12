@@ -107,11 +107,16 @@ class AddressPickerModel extends _CommonPickerModel {
       }
 
       /// 市町村データを取得
-      fillCites();
       if (currentAddress != null && currentAddress.hasCity) {
         setCityIndex(cites.indexOf(currentAddress.city!));
       }
     });
+  }
+
+  @override
+  void setPrefectureIndex(int index) {
+    super.setPrefectureIndex(index);
+    fillCites();
   }
 
   void fillPrefectures() {

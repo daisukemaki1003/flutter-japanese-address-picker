@@ -5,7 +5,7 @@ import 'package:flutter_japanese_address_picker/src/japanese_address_picker_them
 import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_header.dart';
 import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_view_item.dart';
 
-typedef AddressChangedCallback = Function(AddressModel address);
+typedef AddressChangedCallback = Function(AddressModel? address);
 
 class JapaneseAddressPicker {
   /// [showHeader]ボトムソートにヘッダーを表示するか
@@ -159,9 +159,8 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
                       onSelectedItemChanged: pickerModel.setPrefectureIndex,
                       onSelectedItemChangedWhenScrollEnd: (address) {
                         setState(() {
-                          pickerModel.fillCites();
                           refreshScroll();
-                          // onChangeAddress();
+                          route.onChanged?.call(pickerModel.finalAddress());
                         });
                       },
                     ),
@@ -171,7 +170,7 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
                       scrollController: cityScrollController,
                       onSelectedItemChanged: pickerModel.setCityIndex,
                       onSelectedItemChangedWhenScrollEnd: (address) {
-                        // setState(() => onChangeAddress());
+                        route.onChanged?.call(pickerModel.finalAddress());
                       },
                     ),
                   ]),
