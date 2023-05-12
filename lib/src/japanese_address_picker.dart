@@ -10,12 +10,14 @@ typedef AddressChangedCallback = Function(AddressModel? address);
 class JapaneseAddressPicker {
   /// [showHeader]ボトムソートにヘッダーを表示するか
   /// falseの場合はヘッダーを表示しない
-  static Future<AddressModel?> showBottomSheet(
+  static Future<AddressModel?> show(
     BuildContext context, {
     bool showHeader = true,
     AddressModel? initialValue,
     AddressChangedCallback? onChanged,
     JapaneseAddressPickerTheme? theme,
+    bool isAllowUnselectedPrefecture = true,
+    bool isAllowUnselectedCity = true,
   }) async {
     return await Navigator.push<AddressModel>(
       context,
@@ -25,8 +27,8 @@ class JapaneseAddressPicker {
         theme: theme ?? JapaneseAddressPickerTheme(),
         pickerModel: AddressPickerModel(
           currentAddress: initialValue,
-          isAllowUnselectedPrefecture: true,
-          isAllowUnselectedCity: true,
+          isAllowUnselectedPrefecture: isAllowUnselectedPrefecture,
+          isAllowUnselectedCity: isAllowUnselectedCity,
         ),
       ),
     );
