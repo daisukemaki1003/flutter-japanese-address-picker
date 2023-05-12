@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_japanese_address_picker/src/address_model.dart';
 
 class JapaneseAddressPickerViewItem extends StatelessWidget {
   const JapaneseAddressPickerViewItem({
@@ -14,13 +13,13 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
   final ValueKey? valueKey;
 
   /// 表示するアドレスデータリスト
-  final List<AddressItem> addresses;
+  final List<String> addresses;
 
   final FixedExtentScrollController? scrollController;
 
   /// アドレスデータが変更された際に呼び出される関数
-  final ValueChanged<AddressItem> onSelectedItemChanged;
-  final ValueChanged<AddressItem> onSelectedItemChangedWhenScrollEnd;
+  final ValueChanged<int> onSelectedItemChanged;
+  final ValueChanged<int> onSelectedItemChangedWhenScrollEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
             final FixedExtentMetrics metrics =
                 notification.metrics as FixedExtentMetrics;
             final int currentItemIndex = metrics.itemIndex;
-            onSelectedItemChangedWhenScrollEnd(addresses[currentItemIndex]);
+            onSelectedItemChangedWhenScrollEnd(currentItemIndex);
           }
           return false;
         },
@@ -43,15 +42,13 @@ class JapaneseAddressPickerViewItem extends StatelessWidget {
           useMagnifier: true,
           backgroundColor: Colors.white,
           scrollController: scrollController,
-          onSelectedItemChanged: (index) {
-            onSelectedItemChanged(addresses[index]);
-          },
+          onSelectedItemChanged: onSelectedItemChanged,
           childCount: addresses.length,
           itemBuilder: (context, index) {
             return Container(
               alignment: Alignment.center,
               child: Text(
-                addresses[index].name,
+                addresses[index],
                 textAlign: TextAlign.start,
               ),
             );

@@ -28,4 +28,8 @@ import 'package:flutter_japanese_address_picker/flutter_japanese_address_picker.
 |  initialValue  |  Set the initial value.<br>Please enter the ID of the prefecture or municipality you want to set or the name of the place.<br>For the ID of each prefecture or municipality, please refer to the Ministry of Internal Affairs and Communications' prefectural code or municipal code.<br>https://www.soumu.go.jp/denshijiti/code.html |
 |  theme  |  Manage the size, style, etc. of the Flutter Japanese address picker.<br>You can also set the text that appears in the header from here.  |
 |  onChanged  |  You can get the selected address data.  |
+|  isAllowUnselectedPrefecture  |  Whether to allow unselected prefecture data.  |
+|  isAllowUnselectedCity  |  Whether to allow unselected city data.  |
+
+
 
