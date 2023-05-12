@@ -5,7 +5,7 @@ import 'package:flutter_japanese_address_picker/src/japanese_address_picker_them
 import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_header.dart';
 import 'package:flutter_japanese_address_picker/src/widgets/japanese_address_picker_view_item.dart';
 
-typedef AddressChangedCallback = Function(AddressModel? address);
+typedef AddressChangedCallback = Function(AddressModel address);
 
 class JapaneseAddressPicker {
   /// [showHeader]ボトムソートにヘッダーを表示するか
@@ -119,10 +119,6 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
     super.initState();
   }
 
-  void onChangeAddress() {
-    route.onChanged?.call(pickerModel.currentAddress);
-  }
-
   void refreshScroll() {
     prefScrollController = FixedExtentScrollController(
       initialItem: pickerModel.currentPrefectureIndex(),
@@ -152,7 +148,7 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
                   theme: theme,
                   onCansel: () => Navigator.pop(context),
                   onSave: () =>
-                      Navigator.pop(context, pickerModel.currentAddress),
+                      Navigator.pop(context, pickerModel.finalAddress()),
                 ),
                 Expanded(
                   child: Row(children: [
@@ -165,7 +161,7 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
                         setState(() {
                           pickerModel.fillCites();
                           refreshScroll();
-                          onChangeAddress();
+                          // onChangeAddress();
                         });
                       },
                     ),
@@ -175,7 +171,7 @@ class _JapaneseAddressPickerState extends State<_JapaneseAddressPicker> {
                       scrollController: cityScrollController,
                       onSelectedItemChanged: pickerModel.setCityIndex,
                       onSelectedItemChangedWhenScrollEnd: (address) {
-                        setState(() => onChangeAddress());
+                        // setState(() => onChangeAddress());
                       },
                     ),
                   ]),

@@ -60,12 +60,9 @@ part 'address_model.g.dart';
 class AddressModel with _$AddressModel {
   const AddressModel._();
   const factory AddressModel({
-    required String? prefecture,
-    required String? city,
+    required String prefecture,
+    @Default(null) String? city,
   }) = _AddressModel;
-
-  /// [prefecture]が存在するかどうか
-  bool get hasPrefecture => prefecture != null;
 
   /// [city]が存在するかどうか
   bool get hasCity => city != null;

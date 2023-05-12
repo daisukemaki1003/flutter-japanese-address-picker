@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AddressModel {
-  String? get prefecture => throw _privateConstructorUsedError;
+  String get prefecture => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +30,7 @@ abstract class $AddressModelCopyWith<$Res> {
           AddressModel value, $Res Function(AddressModel) then) =
       _$AddressModelCopyWithImpl<$Res, AddressModel>;
   @useResult
-  $Res call({String? prefecture, String? city});
+  $Res call({String prefecture, String? city});
 }
 
 /// @nodoc
@@ -46,14 +46,14 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? prefecture = freezed,
+    Object? prefecture = null,
     Object? city = freezed,
   }) {
     return _then(_value.copyWith(
-      prefecture: freezed == prefecture
+      prefecture: null == prefecture
           ? _value.prefecture
           : prefecture // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,7 @@ abstract class _$$_AddressModelCopyWith<$Res>
       __$$_AddressModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? prefecture, String? city});
+  $Res call({String prefecture, String? city});
 }
 
 /// @nodoc
@@ -84,14 +84,14 @@ class __$$_AddressModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? prefecture = freezed,
+    Object? prefecture = null,
     Object? city = freezed,
   }) {
     return _then(_$_AddressModel(
-      prefecture: freezed == prefecture
+      prefecture: null == prefecture
           ? _value.prefecture
           : prefecture // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -103,12 +103,13 @@ class __$$_AddressModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AddressModel extends _AddressModel {
-  const _$_AddressModel({required this.prefecture, required this.city})
+  const _$_AddressModel({required this.prefecture, this.city = null})
       : super._();
 
   @override
-  final String? prefecture;
+  final String prefecture;
   @override
+  @JsonKey()
   final String? city;
 
   @override
@@ -138,12 +139,11 @@ class _$_AddressModel extends _AddressModel {
 
 abstract class _AddressModel extends AddressModel {
   const factory _AddressModel(
-      {required final String? prefecture,
-      required final String? city}) = _$_AddressModel;
+      {required final String prefecture, final String? city}) = _$_AddressModel;
   const _AddressModel._() : super._();
 
   @override
-  String? get prefecture;
+  String get prefecture;
   @override
   String? get city;
   @override

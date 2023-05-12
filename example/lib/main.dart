@@ -40,11 +40,16 @@ class ExampleApp extends StatelessWidget {
             width: buttonWidth,
             child: ElevatedButton(
               onPressed: () async {
-                await JapaneseAddressPicker.showBottomSheet(
+                final address = await JapaneseAddressPicker.showBottomSheet(
                   context,
                   showHeader: true,
                   theme: JapaneseAddressPickerTheme(headerTitle: "居住地"),
+                  initialValue: const AddressModel(
+                    prefecture: '北海道',
+                    city: '函館市',
+                  ),
                 );
+                print(address);
               },
               child: const Text('Open picker'),
             ),
